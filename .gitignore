@@ -27,3 +27,5 @@ dist/
 
 # Cache
 .cache/
+# Uploaded test images
+data/uploads/
