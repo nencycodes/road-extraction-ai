@@ -1,3 +1,4 @@
+from src.image_processing.image_reader import read_image
 from fastapi import APIRouter, UploadFile, File
 import shutil
 from pathlib import Path
