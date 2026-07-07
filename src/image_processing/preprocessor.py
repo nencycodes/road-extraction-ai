@@ -1,6 +1,5 @@
 import cv2
 
-
 def preprocess_image(image):
 
     resized = cv2.resize(image, (512, 512))
