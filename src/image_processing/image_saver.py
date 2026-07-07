@@ -12,3 +12,14 @@ def save_processed_image(image, filename):
     cv2.imwrite(str(save_path), image)
 
     return save_path
+EDGE_FOLDER = Path("data/edges")
+EDGE_FOLDER.mkdir(parents=True, exist_ok=True)
+
+
+def save_edge_image(image, filename):
+
+    save_path = EDGE_FOLDER / filename
+
+    cv2.imwrite(str(save_path), image)
+
+    return save_path
