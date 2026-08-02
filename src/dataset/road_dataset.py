@@ -5,7 +5,7 @@ Custom PyTorch Dataset for the Massachusetts Roads Dataset.
 """
 
 import os
-
+import torch
 from PIL import Image
 
 from torch.utils.data import Dataset
