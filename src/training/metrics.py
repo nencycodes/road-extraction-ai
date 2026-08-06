@@ -48,7 +48,7 @@ def iou_score(predictions, targets, smooth=1e-6):
     predictions = torch.sigmoid(predictions)
     predictions = (predictions > 0.5).float()
 
-    intersection = (predictions * targets).sum()
+    intersection = (predictions * targets).float().sum()
 
     union = (
         predictions.sum()

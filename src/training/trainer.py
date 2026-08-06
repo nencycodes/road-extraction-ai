@@ -15,6 +15,9 @@ from src.training.metrics import (
 
 
 class Trainer:
+    """
+    Trainer class responsible for training the U-Net model.
+    """
 
     def __init__(
         self,
@@ -35,17 +38,16 @@ class Trainer:
 
         self.best_loss = float("inf")
 
+        # Create models directory if it doesn't exist
         os.makedirs(
-            os.path.dirname(save_path),
+            os.path.dirname(self.save_path),
             exist_ok=True
         )
 
-        self.model.to(device)
+        # Move model to GPU/CPU
+        self.model.to(self.device)
 
-    def train_one_epoch(
-        self,
-        epoch
-    ):
+    def train_one_epoch(self, epoch):
 
         self.model.train()
 
@@ -60,38 +62,62 @@ class Trainer:
 
         for images, masks in progress_bar:
 
-            images = images.to(self.device)
-            masks = masks.to(self.device)
+            # Move batch to GPU/CPU
+            images = images.to(
+                self.device,
+                non_blocking=True
+            )
 
+            masks = masks.to(
+                self.device,
+                non_blocking=True
+            )
+
+            # BCEWithLogitsLoss expects float targets
+            masks = masks.float()
+
+            # Reset gradients
             self.optimizer.zero_grad()
 
+            # Forward Pass
             outputs = self.model(images)
 
+            # Calculate Loss
             loss = self.criterion(
                 outputs,
                 masks
             )
 
+            # Backpropagation
             loss.backward()
 
+            # Update weights
             self.optimizer.step()
 
+            # Metrics
             running_loss += loss.item()
 
-            running_dice += dice_score(
+            current_dice = dice_score(
                 outputs,
                 masks
             )
 
-            running_iou += iou_score(
+            current_iou = iou_score(
                 outputs,
                 masks
             )
 
+            running_dice += current_dice
+            running_iou += current_iou
+
+            # Update Progress Bar
             progress_bar.set_postfix(
-                Loss=f"{loss.item():.4f}"
+                Loss=f"{loss.item():.4f}",
+                Dice=f"{current_dice:.4f}",
+                IoU=f"{current_iou:.4f}"
             )
 
+        # Average Metrics
         epoch_loss = (
             running_loss /
             len(self.train_loader)
@@ -108,13 +134,13 @@ class Trainer:
         )
 
         print("\n" + "=" * 60)
-        print(f"Epoch {epoch}")
+        print(f"Epoch {epoch} Summary")
         print("=" * 60)
-
         print(f"Loss : {epoch_loss:.4f}")
         print(f"Dice : {epoch_dice:.4f}")
         print(f"IoU  : {epoch_iou:.4f}")
 
+        # Save Best Model
         if epoch_loss < self.best_loss:
 
             self.best_loss = epoch_loss
@@ -132,10 +158,11 @@ class Trainer:
             epoch_iou
         )
 
-    def fit(
-        self,
-        epochs
-    ):
+    def fit(self, epochs):
+
+        print("=" * 60)
+        print("🚀 Starting Training")
+        print("=" * 60)
 
         for epoch in range(
             1,
@@ -143,3 +170,7 @@ class Trainer:
         ):
 
             self.train_one_epoch(epoch)
+
+        print("\n" + "=" * 60)
+        print("Training Completed Successfully!")
+        print("=" * 60)
