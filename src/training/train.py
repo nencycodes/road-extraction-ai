@@ -96,12 +96,13 @@ def main():
     # ==========================================================
 
     trainer = Trainer(
-        model=model,
-        train_loader=train_loader,
-        criterion=criterion,
-        optimizer=optimizer,
-        device=device
-    )
+    model=model,
+    train_loader=train_loader,
+    criterion=criterion,
+    optimizer=optimizer,
+    device=device,
+    save_path="/content/drive/MyDrive/RoadVision-AI/models/best_model.pth"
+)
 
     # ==========================================================
     # START TRAINING
