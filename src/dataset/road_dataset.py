@@ -5,80 +5,107 @@ Custom PyTorch Dataset for the Massachusetts Roads Dataset.
 """
 
 import os
-import torch
-from PIL import Image
 
+import pandas as pd
+import torch
+
+from PIL import Image
 from torch.utils.data import Dataset
 
 
 class RoadDataset(Dataset):
     """
-    Custom Dataset for Road Segmentation.
+    Dataset for binary road segmentation.
 
-    Returns:
-        image : Tensor
-        mask  : Tensor
+    Uses metadata.csv as the source of truth for
+    image-mask relationships.
     """
 
     def __init__(
         self,
-        image_dir: str,
-        mask_dir: str,
-        transform=None
+        metadata_path,
+        dataset_root,
+        split="train",
+        image_transform=None,
+        mask_transform=None
     ):
 
-        self.image_dir = image_dir
-        self.mask_dir = mask_dir
-        self.transform = transform
+        self.dataset_root = dataset_root
+        self.image_transform = image_transform
+        self.mask_transform = mask_transform
 
-        # Get all image names (without extension)
-        image_names = {
-            os.path.splitext(file)[0]
-            for file in os.listdir(image_dir)
-        }
+        # Read metadata
+        metadata = pd.read_csv(metadata_path)
 
-        # Get all mask names (without extension)
-        mask_names = {
-            os.path.splitext(file)[0]
-            for file in os.listdir(mask_dir)
-        }
+        # Keep only requested split
+        metadata = metadata[
+            metadata["split"] == split
+        ].copy()
 
-        # Keep only matching image-mask pairs
-        self.valid_images = sorted(
-            image_names & mask_names
-        )
+        # Keep only files that actually exist
+        valid_rows = []
+
+        for _, row in metadata.iterrows():
+
+            image_path = os.path.join(
+                dataset_root,
+                row["tiff_image_path"]
+            )
+
+            mask_path = os.path.join(
+                dataset_root,
+                row["tif_label_path"]
+            )
+
+            if (
+                os.path.isfile(image_path)
+                and
+                os.path.isfile(mask_path)
+            ):
+
+                valid_rows.append(
+                    {
+                        "image_path": image_path,
+                        "mask_path": mask_path
+                    }
+                )
+
+        self.samples = valid_rows
 
         print(
-            f"Loaded {len(self.valid_images)} image-mask pairs."
+            f"{split.upper()} dataset: "
+            f"{len(self.samples)} valid image-mask pairs."
         )
 
     def __len__(self):
 
-        return len(self.valid_images)
+        return len(self.samples)
 
     def __getitem__(self, index):
 
-        image_name = self.valid_images[index]
+        sample = self.samples[index]
 
-        image_path = os.path.join(
-            self.image_dir,
-            image_name + ".tiff"
-        )
+        # Load image
+        image = Image.open(
+            sample["image_path"]
+        ).convert("RGB")
 
-        mask_path = os.path.join(
-            self.mask_dir,
-            image_name + ".tif"
-        )
+        # Load mask
+        mask = Image.open(
+            sample["mask_path"]
+        ).convert("L")
 
-        image = Image.open(image_path).convert("RGB")
+        # Transform image
+        if self.image_transform:
 
-        mask = Image.open(mask_path).convert("L")
+            image = self.image_transform(image)
 
-        if self.transform:
+        # Transform mask
+        if self.mask_transform:
 
-            image = self.transform(image)
+            mask = self.mask_transform(mask)
 
-            mask = self.transform(mask)
-            mask = (mask > 0).float()
+        # Ensure binary mask
+        mask = (mask > 0.5).float()
 
         return image, mask

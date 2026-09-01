@@ -20,19 +20,58 @@ from src.training.trainer import Trainer
 def main():
 
     # ==========================================================
-    # DATASET PATHS
+    # PATHS
     # ==========================================================
 
-    train_image_dir = "/content/drive/MyDrive/RoadVision-AI/dataset/tiff/train"
+    dataset_root = (
+        "/content/drive/MyDrive/"
+        "RoadVision-AI/dataset"
+    )
 
-    train_mask_dir = "/content/drive/MyDrive/RoadVision-AI/dataset/tiff/train_labels"
+    metadata_path = (
+        "/content/drive/MyDrive/"
+        "RoadVision-AI/dataset/metadata.csv"
+    )
+
+    model_save_path = (
+        "/content/drive/MyDrive/"
+        "RoadVision-AI/models/best_model.pth"
+    )
 
     # ==========================================================
-    # TRANSFORMS
+    # DEVICE
     # ==========================================================
 
-    transform = transforms.Compose([
+    device = torch.device(
+        "cuda"
+        if torch.cuda.is_available()
+        else "cpu"
+    )
+
+    print("=" * 60)
+    print("Road Extraction AI")
+    print("=" * 60)
+
+    print(f"Device: {device}")
+
+    # ==========================================================
+    # IMAGE TRANSFORM
+    # ==========================================================
+
+    image_transform = transforms.Compose([
         transforms.Resize((256, 256)),
+        transforms.ToTensor()
+    ])
+
+    # ==========================================================
+    # MASK TRANSFORM
+    # ==========================================================
+
+    mask_transform = transforms.Compose([
+        transforms.Resize(
+            (256, 256),
+            interpolation=transforms.InterpolationMode.NEAREST
+        ),
         transforms.ToTensor()
     ])
 
@@ -41,9 +80,11 @@ def main():
     # ==========================================================
 
     train_dataset = RoadDataset(
-        image_dir=train_image_dir,
-        mask_dir=train_mask_dir,
-        transform=transform
+        metadata_path=metadata_path,
+        dataset_root=dataset_root,
+        split="train",
+        image_transform=image_transform,
+        mask_transform=mask_transform
     )
 
     # ==========================================================
@@ -58,17 +99,13 @@ def main():
         pin_memory=True
     )
 
-    # ==========================================================
-    # DEVICE
-    # ==========================================================
-
-    device = torch.device(
-        "cuda" if torch.cuda.is_available() else "cpu"
+    print(
+        f"Training samples: {len(train_dataset)}"
     )
 
-    print("=" * 60)
-    print("Device :", device)
-    print("=" * 60)
+    print(
+        f"Batches per epoch: {len(train_loader)}"
+    )
 
     # ==========================================================
     # MODEL
@@ -96,16 +133,16 @@ def main():
     # ==========================================================
 
     trainer = Trainer(
-    model=model,
-    train_loader=train_loader,
-    criterion=criterion,
-    optimizer=optimizer,
-    device=device,
-    save_path="/content/drive/MyDrive/RoadVision-AI/models/best_model.pth"
-)
+        model=model,
+        train_loader=train_loader,
+        criterion=criterion,
+        optimizer=optimizer,
+        device=device,
+        save_path=model_save_path
+    )
 
     # ==========================================================
-    # START TRAINING
+    # TRAIN
     # ==========================================================
 
     trainer.fit(
