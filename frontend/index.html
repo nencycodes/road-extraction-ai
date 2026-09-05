@@ -5,75 +5,391 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>RoadVision AI</title>
+    <title>RoadVision AI | Intelligent Road Extraction</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <header class="navbar">
-        <div class="logo">RoadVision AI</div>
+    <!-- Background decoration -->
+    <div class="background-grid"></div>
 
-        <div class="tagline">
-            AI-Powered Road Extraction
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <div class="brand">
+            <div class="brand-icon">
+                RV
+            </div>
+
+            <div>
+                <h2>RoadVision <span>AI</span></h2>
+                <p>Satellite Intelligence</p>
+            </div>
         </div>
+
+        <div class="nav-status">
+            <span class="status-dot"></span>
+            AI Model Online
+        </div>
+
     </header>
 
 
+    <!-- ================= MAIN ================= -->
+
     <main class="container">
 
+
+        <!-- HERO -->
+
         <section class="hero">
-            <h1>Extract Roads from Satellite Images</h1>
 
-            <p>
-                Upload a satellite image and let RoadVision AI
-                identify road networks using deep learning.
+            <div class="hero-badge">
+                <span>✦</span>
+                Deep Learning • Satellite Vision
+            </div>
+
+            <h1>
+                See the Roads
+                <span>From Above.</span>
+            </h1>
+
+            <p class="hero-description">
+                RoadVision AI extracts road networks from satellite
+                imagery using a custom U-Net segmentation model.
             </p>
-        </section>
-
-
-        <section class="upload-card">
-
-            <h2>Upload Satellite Image</h2>
-
-            <input
-                type="file"
-                id="imageInput"
-                accept="image/*,.tif,.tiff"
-            >
-
-            <button id="predictButton">
-                Extract Roads
-            </button>
-
-            <p id="status"></p>
 
         </section>
 
 
-        <section class="results">
+        <!-- ================= UPLOAD SECTION ================= -->
 
-            <div class="result-card">
+        <section class="upload-section">
 
-                <h2>Satellite Image</h2>
+            <div class="section-heading">
 
-                <img
-                    id="originalImage"
-                    alt="Uploaded satellite image"
-                >
+                <div>
+                    <p class="eyebrow">01 / INPUT</p>
+
+                    <h2>
+                        Upload Satellite Imagery
+                    </h2>
+
+                    <p>
+                        Provide a satellite image to begin road extraction.
+                    </p>
+                </div>
 
             </div>
 
 
-            <div class="result-card">
+            <div class="upload-card" id="uploadCard">
 
-                <h2>Road Prediction</h2>
+                <div class="upload-icon">
+                    ↑
+                </div>
 
-                <img
-                    id="predictionImage"
-                    alt="Road extraction prediction"
+                <h3>
+                    Drop your satellite image here
+                </h3>
+
+                <p>
+                    or choose a file from your computer
+                </p>
+
+                <label for="imageInput" class="browse-button">
+                    Browse Image
+                </label>
+
+                <input
+                    type="file"
+                    id="imageInput"
+                    accept="image/*,.tif,.tiff"
+                    hidden
                 >
+
+                <div class="supported-formats">
+                    Supported: PNG • JPG • TIFF • GeoTIFF
+                </div>
+
+            </div>
+
+
+            <!-- Selected file -->
+
+            <div class="selected-file" id="selectedFile">
+
+                <div class="file-icon">
+                    IMG
+                </div>
+
+                <div class="file-details">
+
+                    <strong id="fileName">
+                        No image selected
+                    </strong>
+
+                    <span id="fileSize">
+                        —
+                    </span>
+
+                </div>
+
+                <button
+                    class="remove-file"
+                    id="removeFile"
+                    type="button"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- Predict button -->
+
+            <button
+                id="predictButton"
+                class="predict-button"
+                type="button"
+                disabled
+            >
+
+                <span class="button-icon">
+                    ✦
+                </span>
+
+                Extract Road Network
+
+                <span class="arrow">
+                    →
+                </span>
+
+            </button>
+
+
+            <!-- Processing status -->
+
+            <div
+                class="processing-status"
+                id="processingStatus"
+            >
+
+                <div class="loader"></div>
+
+                <div>
+                    <strong>Analysing satellite imagery...</strong>
+                    <span>
+                        RoadVision AI is extracting road patterns.
+                    </span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= RESULTS ================= -->
+
+        <section
+            class="results-section"
+            id="resultsSection"
+        >
+
+            <div class="section-heading result-heading">
+
+                <div>
+
+                    <p class="eyebrow">02 / OUTPUT</p>
+
+                    <h2>
+                        Road Extraction Result
+                    </h2>
+
+                    <p>
+                        Compare the original satellite image with
+                        the AI-generated road mask.
+                    </p>
+
+                </div>
+
+                <div class="result-badge">
+                    ✓ Prediction Complete
+                </div>
+
+            </div>
+
+
+            <div class="result-grid">
+
+
+                <!-- Original image -->
+
+                <div class="image-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <span class="panel-number">01</span>
+                            <strong>Satellite Image</strong>
+                        </div>
+
+                        <span class="panel-label">
+                            INPUT
+                        </span>
+
+                    </div>
+
+                    <div class="image-container">
+
+                        <img
+                            id="originalImage"
+                            alt="Uploaded satellite image"
+                        >
+
+                        <div class="image-placeholder">
+                            Satellite image
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Prediction -->
+
+                <div class="image-panel prediction-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <span class="panel-number">02</span>
+                            <strong>Road Prediction</strong>
+                        </div>
+
+                        <span class="panel-label">
+                            AI OUTPUT
+                        </span>
+
+                    </div>
+
+                    <div class="image-container">
+
+                        <img
+                            id="predictionImage"
+                            alt="Road extraction prediction"
+                        >
+
+                        <div class="image-placeholder">
+                            AI prediction
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Result information -->
+
+            <div class="result-info">
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        MODEL
+                    </span>
+
+                    <strong>
+                        RoadVision U-Net V1
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        INPUT
+                    </span>
+
+                    <strong>
+                        Satellite RGB
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        SEGMENTATION
+                    </span>
+
+                    <strong>
+                        Binary Road Mask
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        PROCESSING
+                    </span>
+
+                    <strong>
+                        AI Inference
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ABOUT MODEL ================= -->
+
+        <section class="model-section">
+
+            <div class="model-card">
+
+                <div class="model-symbol">
+                    ◈
+                </div>
+
+                <div class="model-content">
+
+                    <p class="eyebrow">
+                        ROADVISION ENGINE
+                    </p>
+
+                    <h2>
+                        Built for Satellite Road Extraction
+                    </h2>
+
+                    <p>
+                        RoadVision AI uses a custom U-Net semantic
+                        segmentation architecture trained to distinguish
+                        road pixels from background pixels in satellite
+                        imagery.
+                    </p>
+
+                </div>
+
+                <div class="model-tech">
+
+                    <span>U-Net</span>
+                    <span>PyTorch</span>
+                    <span>FastAPI</span>
+
+                </div>
 
             </div>
 
@@ -82,10 +398,23 @@
     </main>
 
 
-    <footer>
-        <p>RoadVision AI • Deep Learning based Road Extraction</p>
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div>
+            <strong>RoadVision AI</strong>
+            <span>Intelligent Road Extraction from Satellite Imagery</span>
+        </div>
+
+        <span>
+            © 2026 RoadVision AI
+        </span>
+
     </footer>
 
+
+    <!-- JavaScript -->
 
     <script src="script.js"></script>
 
