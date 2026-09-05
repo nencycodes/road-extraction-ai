@@ -5,7 +5,7 @@ from PIL import Image
 from src.models.unet import UNet
 
 
-MODEL_PATH = "models/best_model_v1_256.pth"
+MODEL_PATH = "src/models/best_model_v1_256.pth"
 
 
 def load_model():
