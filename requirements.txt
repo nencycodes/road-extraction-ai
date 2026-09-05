@@ -1,0 +1,12 @@
+torch
+torchvision
+numpy
+pandas
+Pillow
+matplotlib
+tqdm
+scipy
+gradio
+fastapi
+uvicorn
+python-multipart

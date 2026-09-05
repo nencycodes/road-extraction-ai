@@ -29,3 +29,32 @@ dist/
 .cache/
 # Uploaded test images
 data/uploads/
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+venv/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Dataset / generated data
+data/datasets/
+data/edges/
+data/processed/
+data/uploads/
+
+# Model weights
+*.pth
+*.pt
+*.ckpt
+
+# Environment
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
