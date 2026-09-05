@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RoadVision AI</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">RoadVision AI</div>
+
+        <div class="tagline">
+            AI-Powered Road Extraction
+        </div>
+    </header>
+
+
+    <main class="container">
+
+        <section class="hero">
+            <h1>Extract Roads from Satellite Images</h1>
+
+            <p>
+                Upload a satellite image and let RoadVision AI
+                identify road networks using deep learning.
+            </p>
+        </section>
+
+
+        <section class="upload-card">
+
+            <h2>Upload Satellite Image</h2>
+
+            <input
+                type="file"
+                id="imageInput"
+                accept="image/*,.tif,.tiff"
+            >
+
+            <button id="predictButton">
+                Extract Roads
+            </button>
+
+            <p id="status"></p>
+
+        </section>
+
+
+        <section class="results">
+
+            <div class="result-card">
+
+                <h2>Satellite Image</h2>
+
+                <img
+                    id="originalImage"
+                    alt="Uploaded satellite image"
+                >
+
+            </div>
+
+
+            <div class="result-card">
+
+                <h2>Road Prediction</h2>
+
+                <img
+                    id="predictionImage"
+                    alt="Road extraction prediction"
+                >
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>RoadVision AI • Deep Learning based Road Extraction</p>
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
