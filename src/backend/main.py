@@ -1,5 +1,8 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+
 from src.backend.routers.upload import router as upload_router
+
 
 app = FastAPI(
     title="RoadVision AI",
@@ -7,8 +10,17 @@ app = FastAPI(
     version="0.1.0"
 )
 
+
 # Register the upload router
 app.include_router(upload_router)
+
+
+# Serve generated prediction images
+app.mount(
+    "/processed",
+    StaticFiles(directory="data/processed"),
+    name="processed"
+)
 
 
 @app.get("/")
