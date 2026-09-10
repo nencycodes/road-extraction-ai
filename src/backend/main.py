@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 from src.backend.routers.upload import router as upload_router
 
@@ -11,7 +12,17 @@ app = FastAPI(
 )
 
 
-# Register the upload router
+# Allow frontend to communicate with backend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+# Register upload router
 app.include_router(upload_router)
 
 

@@ -10,3 +10,5 @@ gradio
 fastapi
 uvicorn
 python-multipart
+networkx
+scikit-image

@@ -1,5 +1,4 @@
 const imageInput = document.getElementById("imageInput");
-const uploadCard = document.getElementById("uploadCard");
 
 const selectedFile = document.getElementById("selectedFile");
 const fileName = document.getElementById("fileName");
@@ -32,7 +31,6 @@ imageInput.addEventListener("change", function () {
     fileName.textContent = file.name;
 
     const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
-
     fileSize.textContent = `${sizeMB} MB`;
 
     selectedFile.style.display = "flex";
@@ -40,7 +38,6 @@ imageInput.addEventListener("change", function () {
     predictButton.disabled = false;
 
     resultsSection.style.display = "none";
-
 });
 
 
@@ -58,6 +55,8 @@ removeFile.addEventListener("click", function () {
 
     resultsSection.style.display = "none";
 
+    originalImage.style.display = "none";
+    predictionImage.style.display = "none";
 });
 
 
@@ -100,15 +99,15 @@ predictButton.addEventListener("click", async function () {
         const result = await response.json();
 
 
-        // Display original image
+        // ================= INPUT PREVIEW =================
 
         originalImage.src =
-            URL.createObjectURL(selectedImage);
+            `http://127.0.0.1:8000${result.preview}?t=${Date.now()}`;
 
         originalImage.style.display = "block";
 
 
-        // Display AI prediction
+        // ================= AI PREDICTION =================
 
         predictionImage.src =
             `http://127.0.0.1:8000${result.prediction}?t=${Date.now()}`;
@@ -116,12 +115,9 @@ predictButton.addEventListener("click", async function () {
         predictionImage.style.display = "block";
 
 
-        // Show results
+        // ================= SHOW RESULTS =================
 
         resultsSection.style.display = "block";
-
-
-        // Scroll to results
 
         resultsSection.scrollIntoView({
             behavior: "smooth"
@@ -130,7 +126,7 @@ predictButton.addEventListener("click", async function () {
 
     } catch (error) {
 
-        console.error(error);
+        console.error("RoadVision AI Error:", error);
 
         alert(
             "Unable to connect to RoadVision AI backend."
