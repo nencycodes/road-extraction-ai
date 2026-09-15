@@ -937,7 +937,7 @@
          JAVASCRIPT
          ========================================================= -->
 
-    <script src="script.js"></script>
+    <script src="script.js?v=20260915-1"></script>
     <script>
     /*
      * RoadVision visualization bridge
@@ -1189,43 +1189,22 @@
             }
         }
 
-        const originalFetch = window.fetch;
+        window.addEventListener(
+            "roadvision:result",
+            function (event) {
+                const data = event.detail || {};
 
-        window.fetch = async function () {
-            const response =
-                await originalFetch.apply(this, arguments);
-
-            try {
-                const clone = response.clone();
-                const type =
-                    clone.headers.get("content-type") || "";
-
-                if (type.includes("application/json")) {
-                    const data = await clone.json();
-
-                    // STEP 03 — never remove this.
-                    if (data && data.graph &&
-                        data.graph.visualization) {
-                        showGraph(data.graph.visualization);
-                    }
-
-                    // STEP 04 — independent visual.
-                    if (data && (data.criticality || data.graph)) {
-                        // Give Step 02 a moment to populate predictionImage.
-                        setTimeout(function () {
-                            drawCriticalityMap(data);
-                        }, 150);
-                    }
+                if (data.graph && data.graph.visualization) {
+                    showGraph(data.graph.visualization);
                 }
-            } catch (error) {
-                console.debug(
-                    "[RoadVision] Visualization bridge:",
-                    error
-                );
-            }
 
-            return response;
-        };
+                if (data.criticality || data.graph) {
+                    setTimeout(function () {
+                        drawCriticalityMap(data);
+                    }, 150);
+                }
+            }
+        );
     })();
     </script>
 

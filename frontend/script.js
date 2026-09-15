@@ -896,6 +896,13 @@ predictButton.addEventListener(
                 result
             );
 
+            window.dispatchEvent(
+                new CustomEvent(
+                    "roadvision:result",
+                    { detail: result }
+                )
+            );
+
 
             // =================================================
             // STEP 02 — ORIGINAL IMAGE
