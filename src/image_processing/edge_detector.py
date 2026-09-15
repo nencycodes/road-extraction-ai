@@ -2,7 +2,13 @@ import cv2
 
 
 def detect_edges(image):
-# canny function helps to detect the changes in the image and detect the edges of the image
+    """
+    Detect image edges using the Canny edge detector.
+    """
+
+    if image is None:
+        raise ValueError("Input image cannot be None.")
+
     edges = cv2.Canny(
         image,
         threshold1=100,

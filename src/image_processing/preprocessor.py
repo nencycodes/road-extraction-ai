@@ -1,11 +1,29 @@
 import cv2
 
+
 def preprocess_image(image):
+    """
+    Basic image preprocessing for the classical
+    image-processing pipeline.
+    """
 
-    resized = cv2.resize(image, (512, 512))
+    if image is None:
+        raise ValueError("Input image cannot be None.")
 
-    gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
+    resized = cv2.resize(
+        image,
+        (512, 512)
+    )
 
-    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+    gray = cv2.cvtColor(
+        resized,
+        cv2.COLOR_BGR2GRAY
+    )
+
+    blurred = cv2.GaussianBlur(
+        gray,
+        (5, 5),
+        0
+    )
 
     return blurred
