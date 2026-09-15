@@ -1,3 +1,10 @@
+"""
+RoadVision AI - Model Inference
+
+Loads the trained RoadVision U-Net model and converts
+satellite imagery into a binary road segmentation mask.
+"""
+
 import os
 
 import torch
@@ -7,16 +14,29 @@ from PIL import Image
 from src.models.unet import UNet
 
 
-# Default model.
-# Change this to the final aggressive model when it is copied
-# into src/models/.
-MODEL_PATH = "src/models/best_model_v1_256.pth"
+# ============================================================
+# FINAL MODEL
+# ============================================================
 
+MODEL_PATH = "src/models/ROADVISION_FINAL_BEST.pth"
+
+
+# ============================================================
+# LOAD MODEL
+# ============================================================
 
 def load_model(model_path=MODEL_PATH):
+    """
+    Load the RoadVision U-Net model.
+
+    Supports both:
+        1. Raw state_dict checkpoints
+        2. Checkpoints containing a 'state_dict' key
+    """
 
     device = torch.device(
-        "cuda" if torch.cuda.is_available() else "cpu"
+        "cuda" if torch.cuda.is_available()
+        else "cpu"
     )
 
     if not os.path.exists(model_path):
@@ -31,8 +51,10 @@ def load_model(model_path=MODEL_PATH):
         map_location=device
     )
 
-    # Supports a raw state_dict or a wrapped checkpoint.
-    if isinstance(checkpoint, dict) and "state_dict" in checkpoint:
+    if (
+        isinstance(checkpoint, dict)
+        and "state_dict" in checkpoint
+    ):
         checkpoint = checkpoint["state_dict"]
 
     model.load_state_dict(
@@ -46,9 +68,41 @@ def load_model(model_path=MODEL_PATH):
     return model, device
 
 
-def predict(image_path, model_path=MODEL_PATH):
+# ============================================================
+# PREDICTION
+# ============================================================
 
-    model, device = load_model(model_path)
+def predict(
+    image_path,
+    model_path=MODEL_PATH
+):
+    """
+    Generate a binary road segmentation mask.
+
+    Parameters
+    ----------
+    image_path : str
+        Input satellite image.
+
+    model_path : str
+        Path to trained RoadVision model.
+
+    Returns
+    -------
+    mask : torch.Tensor
+        Binary road mask.
+
+    original_size : tuple
+        Original image dimensions.
+    """
+
+    model, device = load_model(
+        model_path
+    )
+
+    # --------------------------------------------------------
+    # Same preprocessing used during final model inference
+    # --------------------------------------------------------
 
     transform = transforms.Compose([
         transforms.Resize(
@@ -56,18 +110,33 @@ def predict(image_path, model_path=MODEL_PATH):
             interpolation=transforms.InterpolationMode.BILINEAR
         ),
         transforms.ToTensor(),
-
         transforms.Normalize(
-            mean=[0.485, 0.456, 0.406],
-            std=[0.229, 0.224, 0.225]
+            mean=[
+                0.485,
+                0.456,
+                0.406
+            ],
+            std=[
+                0.229,
+                0.224,
+                0.225
+            ]
         )
     ])
+
+    # --------------------------------------------------------
+    # Read image
+    # --------------------------------------------------------
 
     image = Image.open(
         image_path
     ).convert("RGB")
 
     original_size = image.size
+
+    # --------------------------------------------------------
+    # Prepare tensor
+    # --------------------------------------------------------
 
     image_tensor = transform(
         image
@@ -76,6 +145,10 @@ def predict(image_path, model_path=MODEL_PATH):
     image_tensor = image_tensor.to(
         device
     )
+
+    # --------------------------------------------------------
+    # Model inference
+    # --------------------------------------------------------
 
     with torch.no_grad():
 
@@ -86,6 +159,10 @@ def predict(image_path, model_path=MODEL_PATH):
         probability = torch.sigmoid(
             output
         )
+
+    # --------------------------------------------------------
+    # Convert probability to binary mask
+    # --------------------------------------------------------
 
     mask = (
         probability > 0.5
