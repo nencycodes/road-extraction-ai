@@ -5,103 +5,288 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>RoadVision AI | Intelligent Road Extraction</title>
+    <title>RoadVision | Road Extraction & Network Resilience</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        .criticality-map {
+            position: relative;
+            overflow: hidden;
+        }
+
+        #criticalityCanvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: 420px;
+        }
+
+        .criticality-loading {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none;
+        }
+
+        .criticality-loading span {
+            letter-spacing: 0.18em;
+        }
+    </style>
+
 </head>
 
 <body>
 
-    <!-- Background decoration -->
-    <div class="background-grid"></div>
+    <!-- =========================================================
+         HEADER
+         ========================================================= -->
 
-    <!-- ================= NAVBAR ================= -->
+    <header class="site-header">
 
-    <header class="navbar">
+        <div class="header-inner">
 
-        <div class="brand">
-            <div class="brand-icon">
-                RV
-            </div>
+            <div class="project-title">
 
-            <div>
-                <h2>RoadVision <span>AI</span></h2>
-                <p>Satellite Intelligence</p>
-            </div>
-        </div>
-
-        <div class="nav-status">
-            <span class="status-dot"></span>
-            AI Model Online
-        </div>
-
-    </header>
-
-
-    <!-- ================= MAIN ================= -->
-
-    <main class="container">
-
-
-        <!-- HERO -->
-
-        <section class="hero">
-
-            <div class="hero-badge">
-                <span>✦</span>
-                Deep Learning • Satellite Vision
-            </div>
-
-            <h1>
-                See the Roads
-                <span>From Above.</span>
-            </h1>
-
-            <p class="hero-description">
-                RoadVision AI extracts road networks from satellite
-                imagery using a custom U-Net segmentation model.
-            </p>
-
-        </section>
-
-
-        <!-- ================= UPLOAD SECTION ================= -->
-
-        <section class="upload-section">
-
-            <div class="section-heading">
+                <div class="project-mark">
+                    RV
+                </div>
 
                 <div>
-                    <p class="eyebrow">01 / INPUT</p>
-
-                    <h2>
-                        Upload Satellite Imagery
-                    </h2>
-
+                    <h1>ROADVISION</h1>
                     <p>
-                        Provide a satellite image to begin road extraction.
+                        AI-BASED ROAD EXTRACTION & NETWORK RESILIENCE
                     </p>
                 </div>
 
             </div>
 
+            <div class="header-meta">
+                <span>EARTH OBSERVATION</span>
+                <span class="meta-divider">|</span>
+                <span>AI & GRAPH ANALYSIS</span>
+            </div>
 
-            <div class="upload-card" id="uploadCard">
+        </div>
 
-                <div class="upload-icon">
-                    ↑
+    </header>
+
+
+    <!-- =========================================================
+         MAIN
+         ========================================================= -->
+
+    <main class="main-container">
+
+
+        <!-- =====================================================
+             INTRODUCTION
+             ===================================================== -->
+
+        <section class="intro-section">
+
+            <div class="intro-label">
+                RESEARCH / ANALYSIS MODULE
+            </div>
+
+            <h2>
+                Road Network Extraction
+                <br>
+                <span>&amp; Resilience Analysis</span>
+            </h2>
+
+            <p class="intro-description">
+                An AI-based framework for extracting road infrastructure
+                from satellite imagery, reconstructing its topology,
+                identifying critical network nodes, and evaluating
+                resilience under simulated failures.
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             WORKFLOW
+             ===================================================== -->
+
+        <section class="workflow-section">
+
+            <div class="section-top">
+
+                <div>
+                    <span class="section-number">00</span>
+                    <h3>ANALYSIS WORKFLOW</h3>
                 </div>
 
-                <h3>
-                    Drop your satellite image here
-                </h3>
-
                 <p>
-                    or choose a file from your computer
+                    IMAGE → EXTRACTION → TOPOLOGY → CRITICALITY → RESILIENCE
                 </p>
 
-                <label for="imageInput" class="browse-button">
-                    Browse Image
+            </div>
+
+
+            <div class="workflow">
+
+                <!-- STEP 01 -->
+
+                <div class="workflow-step active" data-step="1">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <div class="step-content">
+                        <strong>Satellite Input</strong>
+                        <span>Satellite imagery acquisition</span>
+                    </div>
+
+                </div>
+
+
+                <div class="workflow-line"></div>
+
+
+                <!-- STEP 02 -->
+
+                <div class="workflow-step" data-step="2">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+                    <div class="step-content">
+                        <strong>Road Extraction</strong>
+                        <span>AI semantic segmentation</span>
+                    </div>
+
+                </div>
+
+
+                <div class="workflow-line"></div>
+
+
+                <!-- STEP 03 -->
+
+                <div class="workflow-step" data-step="3">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+                    <div class="step-content">
+                        <strong>Topology</strong>
+                        <span>Road graph reconstruction</span>
+                    </div>
+
+                </div>
+
+
+                <div class="workflow-line"></div>
+
+
+                <!-- STEP 04 -->
+
+                <div class="workflow-step" data-step="4">
+
+                    <div class="step-number">
+                        04
+                    </div>
+
+                    <div class="step-content">
+                        <strong>Criticality</strong>
+                        <span>Network bottleneck analysis</span>
+                    </div>
+
+                </div>
+
+
+                <div class="workflow-line"></div>
+
+
+                <!-- STEP 05 -->
+
+                <div class="workflow-step" data-step="5">
+
+                    <div class="step-number">
+                        05
+                    </div>
+
+                    <div class="step-content">
+                        <strong>Resilience</strong>
+                        <span>Simulated network failure</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             STEP 01 : INPUT
+             ===================================================== -->
+
+        <section
+            class="analysis-section input-section"
+            id="inputSection"
+        >
+
+            <div class="section-heading">
+
+                <div class="heading-index">
+                    01
+                </div>
+
+                <div>
+
+                    <span class="eyebrow">
+                        SATELLITE INPUT
+                    </span>
+
+                    <h3>
+                        Provide Satellite Imagery
+                    </h3>
+
+                    <p>
+                        Upload an RGB satellite image to initiate
+                        the road-network analysis pipeline.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Upload -->
+
+            <div
+                class="upload-card"
+                id="uploadCard"
+            >
+
+                <div class="upload-symbol">
+                    +
+                </div>
+
+                <h4>
+                    Select satellite image
+                </h4>
+
+                <p>
+                    Drag &amp; drop an image here or browse your computer
+                </p>
+
+                <label
+                    for="imageInput"
+                    class="browse-button"
+                >
+                    SELECT IMAGE
                 </label>
 
                 <input
@@ -111,8 +296,11 @@
                     hidden
                 >
 
-                <div class="supported-formats">
-                    Supported: PNG • JPG • TIFF • GeoTIFF
+                <div class="format-info">
+                    PNG &nbsp;•&nbsp;
+                    JPG &nbsp;•&nbsp;
+                    TIFF &nbsp;•&nbsp;
+                    GeoTIFF
                 </div>
 
             </div>
@@ -120,9 +308,12 @@
 
             <!-- Selected file -->
 
-            <div class="selected-file" id="selectedFile">
+            <div
+                class="selected-file"
+                id="selectedFile"
+            >
 
-                <div class="file-icon">
+                <div class="file-symbol">
                     IMG
                 </div>
 
@@ -139,39 +330,37 @@
                 </div>
 
                 <button
-                    class="remove-file"
-                    id="removeFile"
                     type="button"
+                    id="removeFile"
+                    class="remove-file"
                 >
-                    ×
+                    REMOVE
                 </button>
 
             </div>
 
 
-            <!-- Predict button -->
+            <!-- Start analysis -->
 
             <button
-                id="predictButton"
-                class="predict-button"
                 type="button"
+                id="predictButton"
+                class="primary-button"
                 disabled
             >
 
-                <span class="button-icon">
-                    ✦
+                <span>
+                    START ROAD ANALYSIS
                 </span>
 
-                Extract Road Network
-
-                <span class="arrow">
+                <span class="button-arrow">
                     →
                 </span>
 
             </button>
 
 
-            <!-- Processing status -->
+            <!-- Processing -->
 
             <div
                 class="processing-status"
@@ -181,10 +370,15 @@
                 <div class="loader"></div>
 
                 <div>
-                    <strong>Analysing satellite imagery...</strong>
+
+                    <strong>
+                        PROCESSING SATELLITE IMAGE
+                    </strong>
+
                     <span>
-                        RoadVision AI is extracting road patterns.
+                        Running RoadVision analysis pipeline...
                     </span>
+
                 </div>
 
             </div>
@@ -192,56 +386,68 @@
         </section>
 
 
-        <!-- ================= RESULTS ================= -->
+
+        <!-- =====================================================
+             STEP 02 : ROAD EXTRACTION
+             
+             IMPORTANT:
+             No "results-section" class here.
+             This keeps Step 02 visible.
+             ===================================================== -->
 
         <section
-            class="results-section"
+            class="analysis-section extraction-section"
             id="resultsSection"
         >
 
-            <div class="section-heading result-heading">
+            <div class="section-heading">
+
+                <div class="heading-index">
+                    02
+                </div>
 
                 <div>
 
-                    <p class="eyebrow">02 / OUTPUT</p>
+                    <span class="eyebrow">
+                        ROAD EXTRACTION
+                    </span>
 
-                    <h2>
-                        Road Extraction Result
-                    </h2>
+                    <h3>
+                        AI Segmentation Result
+                    </h3>
 
                     <p>
-                        Compare the original satellite image with
-                        the AI-generated road mask.
+                        Comparison between the input satellite imagery
+                        and the extracted binary road mask.
                     </p>
 
-                </div>
-
-                <div class="result-badge">
-                    ✓ Prediction Complete
                 </div>
 
             </div>
 
 
+            <!-- Image comparison -->
+
             <div class="result-grid">
 
 
-                <!-- Original image -->
+                <!-- Satellite image -->
 
                 <div class="image-panel">
 
                     <div class="panel-header">
 
                         <div>
-                            <span class="panel-number">01</span>
-                            <strong>Satellite Image</strong>
+                            <span>01</span>
+                            <strong>SATELLITE IMAGE</strong>
                         </div>
 
-                        <span class="panel-label">
+                        <small>
                             INPUT
-                        </span>
+                        </small>
 
                     </div>
+
 
                     <div class="image-container">
 
@@ -251,7 +457,7 @@
                         >
 
                         <div class="image-placeholder">
-                            Satellite image
+                            SATELLITE IMAGE
                         </div>
 
                     </div>
@@ -259,32 +465,34 @@
                 </div>
 
 
-                <!-- Prediction -->
 
-                <div class="image-panel prediction-panel">
+                <!-- Road mask -->
+
+                <div class="image-panel">
 
                     <div class="panel-header">
 
                         <div>
-                            <span class="panel-number">02</span>
-                            <strong>Road Prediction</strong>
+                            <span>02</span>
+                            <strong>ROAD MASK</strong>
                         </div>
 
-                        <span class="panel-label">
+                        <small>
                             AI OUTPUT
-                        </span>
+                        </small>
 
                     </div>
+
 
                     <div class="image-container">
 
                         <img
                             id="predictionImage"
-                            alt="Road extraction prediction"
+                            alt="AI-generated road mask"
                         >
 
                         <div class="image-placeholder">
-                            AI prediction
+                            ROAD PREDICTION
                         </div>
 
                     </div>
@@ -293,130 +501,734 @@
 
             </div>
 
-
-            <!-- Result information -->
-
-            <div class="result-info">
-
-                <div class="info-item">
-
-                    <span class="info-label">
-                        MODEL
-                    </span>
-
-                    <strong>
-                        RoadVision U-Net V1
-                    </strong>
-
-                </div>
-
-
-                <div class="info-item">
-
-                    <span class="info-label">
-                        INPUT
-                    </span>
-
-                    <strong>
-                        Satellite RGB
-                    </strong>
-
-                </div>
-
-
-                <div class="info-item">
-
-                    <span class="info-label">
-                        SEGMENTATION
-                    </span>
-
-                    <strong>
-                        Binary Road Mask
-                    </strong>
-
-                </div>
-
-
-                <div class="info-item">
-
-                    <span class="info-label">
-                        PROCESSING
-                    </span>
-
-                    <strong>
-                        AI Inference
-                    </strong>
-
-                </div>
-
-            </div>
-
         </section>
 
 
-        <!-- ================= ABOUT MODEL ================= -->
 
-        <section class="model-section">
+        <!-- =====================================================
+             STEP 03 : ROAD GRAPH
+             ===================================================== -->
 
-            <div class="model-card">
+        <section
+            class="analysis-section graph-section"
+            id="graphSection"
+        >
 
-                <div class="model-symbol">
-                    ◈
+            <div class="section-heading">
+
+                <div class="heading-index">
+                    03
                 </div>
 
-                <div class="model-content">
+                <div>
 
-                    <p class="eyebrow">
-                        ROADVISION ENGINE
-                    </p>
+                    <span class="eyebrow">
+                        TOPOLOGICAL RECONSTRUCTION
+                    </span>
 
-                    <h2>
-                        Built for Satellite Road Extraction
-                    </h2>
+                    <h3>
+                        Road Network Graph
+                    </h3>
 
                     <p>
-                        RoadVision AI uses a custom U-Net semantic
-                        segmentation architecture trained to distinguish
-                        road pixels from background pixels in satellite
-                        imagery.
+                        The extracted road mask is transformed into a
+                        skeleton-based graph for network analysis.
                     </p>
 
                 </div>
 
-                <div class="model-tech">
+            </div>
 
-                    <span>U-Net</span>
-                    <span>PyTorch</span>
-                    <span>FastAPI</span>
+
+            <div class="graph-layout">
+
+
+                <!-- Graph visual -->
+
+                <div class="graph-visual">
+
+                    <div class="graph-placeholder" id="roadGraphContainer">
+
+                        <div id="roadGraphLoading">
+                            <span>ROAD GRAPH</span>
+                            <small>Waiting for graph reconstruction...</small>
+                        </div>
+
+                        <img id="roadGraphImage"
+                             src=""
+                             alt="Road network graph visualization"
+                             style="display:none; width:100%; height:100%; object-fit:contain;">
+
+                    </div>
+
+                </div>
+
+
+                <!-- Graph metrics -->
+
+                <div class="graph-metrics">
+
+                    <div class="metric-card">
+
+                        <span>
+                            GRAPH NODES
+                        </span>
+
+                        <strong id="graphNodes">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="metric-card">
+
+                        <span>
+                            GRAPH EDGES
+                        </span>
+
+                        <strong id="graphEdges">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="metric-card">
+
+                        <span>
+                            CONNECTED COMPONENTS
+                        </span>
+
+                        <strong id="graphComponents">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="metric-card">
+
+                        <span>
+                            CONNECTIVITY RATIO
+                        </span>
+
+                        <strong id="connectivityRatio">
+                            —
+                        </strong>
+
+                    </div>
 
                 </div>
 
             </div>
 
         </section>
+
+
+
+        <!-- =====================================================
+             STEP 04 : CRITICALITY
+             ===================================================== -->
+
+        <section
+            class="analysis-section criticality-section"
+            id="criticalitySection"
+        >
+
+            <div class="section-heading">
+
+                <div class="heading-index">
+                    04
+                </div>
+
+                <div>
+
+                    <span class="eyebrow">
+                        STRUCTURAL INTELLIGENCE
+                    </span>
+
+                    <h3>
+                        Critical Node Analysis
+                    </h3>
+
+                    <p>
+                        Identify high-centrality nodes that act as
+                        potential bottlenecks within the road network.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="criticality-layout">
+
+
+                <!-- Criticality visual -->
+
+                <div class="criticality-visual">
+
+                    <div class="graph-placeholder criticality-map" id="criticalityContainer">
+
+                        <canvas id="criticalityCanvas"
+                                aria-label="Betweenness centrality criticality map"></canvas>
+
+                        <div id="criticalityLoading" class="criticality-loading">
+                            <span>CRITICALITY MAP</span>
+                            <small>Computing network centrality...</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Criticality information -->
+
+                <div class="criticality-panel">
+
+
+                    <div class="critical-node-card">
+
+                        <span>
+                            MOST CRITICAL NODE
+                        </span>
+
+                        <strong id="criticalNode">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="critical-node-card">
+
+                        <span>
+                            BETWEENNESS CENTRALITY
+                        </span>
+
+                        <strong id="criticalityScore">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="criticality-note">
+
+                        Nodes with higher betweenness centrality
+                        represent locations through which a larger
+                        proportion of network paths pass.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             STEP 05 : RESILIENCE
+             ===================================================== -->
+
+        <section
+            class="analysis-section resilience-section"
+            id="resilienceSection"
+        >
+
+            <div class="section-heading">
+
+                <div class="heading-index">
+                    05
+                </div>
+
+                <div>
+
+                    <span class="eyebrow">
+                        SIMULATED STRESS TEST
+                    </span>
+
+                    <h3>
+                        Network Resilience
+                    </h3>
+
+                    <p>
+                        Simulate localized road failure and evaluate
+                        the resulting impact on network connectivity
+                        and travel paths.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Resilience metrics -->
+
+            <div class="resilience-grid">
+
+
+                <div class="resilience-card">
+
+                    <span>
+                        BASELINE CONNECTIVITY
+                    </span>
+
+                    <strong id="baselineConnectivity">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="resilience-card">
+
+                    <span>
+                        POST-FAILURE CONNECTIVITY
+                    </span>
+
+                    <strong id="failedConnectivity">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="resilience-card">
+
+                    <span>
+                        CONNECTIVITY LOSS
+                    </span>
+
+                    <strong id="connectivityLoss">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="resilience-card">
+
+                    <span>
+                        PATH RESILIENCE INDEX
+                    </span>
+
+                    <strong id="resilienceIndex">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Route comparison -->
+
+            <div class="route-analysis">
+
+
+                <div class="route-column">
+
+                    <div class="route-header">
+                        <span>BEFORE FAILURE</span>
+                    </div>
+
+                    <div class="route-value">
+
+                        <span>
+                            Travel Time
+                        </span>
+
+                        <strong id="timeBefore">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="route-arrow">
+                    →
+                </div>
+
+
+                <div class="route-column">
+
+                    <div class="route-header">
+                        <span>AFTER FAILURE</span>
+                    </div>
+
+                    <div class="route-value">
+
+                        <span>
+                            Travel Time
+                        </span>
+
+                        <strong id="timeAfter">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="route-impact">
+
+                    <span>
+                        TRAVEL-TIME IMPACT
+                    </span>
+
+                    <strong id="travelTimeIncrease">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+
+        
+
+
+        
+
 
     </main>
 
 
-    <!-- ================= FOOTER ================= -->
 
-    <footer class="footer">
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
+
+    <footer class="site-footer">
 
         <div>
-            <strong>RoadVision AI</strong>
-            <span>Intelligent Road Extraction from Satellite Imagery</span>
+
+            <strong>
+                ROADVISION
+            </strong>
+
+            <span>
+                AI-BASED ROAD EXTRACTION & NETWORK RESILIENCE
+            </span>
+
         </div>
 
-        <span>
-            © 2026 RoadVision AI
-        </span>
+        <div>
+            RESEARCH PROJECT • 2026
+        </div>
 
     </footer>
 
 
-    <!-- JavaScript -->
+
+    <!-- =========================================================
+         JAVASCRIPT
+         ========================================================= -->
 
     <script src="script.js"></script>
+    <script>
+    /*
+     * RoadVision visualization bridge
+     * STEP 03 = actual backend road graph image
+     * STEP 04 = separate criticality/bottleneck map
+     */
+    (function () {
+        const API_BASE_URL =
+            window.ROADVISION_API_URL || "http://127.0.0.1:8000";
+
+        const graphImage = document.getElementById("roadGraphImage");
+        const graphLoading = document.getElementById("roadGraphLoading");
+
+        const canvas = document.getElementById("criticalityCanvas");
+        const criticalityLoading =
+            document.getElementById("criticalityLoading");
+
+        const predictionImage =
+            document.getElementById("predictionImage");
+
+        function resolveUrl(path) {
+            if (!path) return "";
+            if (/^https?:\/\//i.test(path)) return path;
+            return API_BASE_URL.replace(/\/$/, "") + "/" +
+                String(path).replace(/^\//, "");
+        }
+
+        function showGraph(path) {
+            if (!graphImage || !path) return;
+
+            const url = resolveUrl(path);
+            graphImage.onload = function () {
+                graphImage.style.display = "block";
+                if (graphLoading) graphLoading.style.display = "none";
+            };
+            graphImage.onerror = function () {
+                graphImage.style.display = "none";
+                if (graphLoading) {
+                    graphLoading.style.display = "flex";
+                    const small = graphLoading.querySelector("small");
+                    if (small) small.textContent =
+                        "Graph visualization could not be loaded.";
+                }
+            };
+            graphImage.src = url;
+        }
+
+        function getCriticalNode(data) {
+            const candidates = [
+                data && data.criticality && data.criticality.node,
+                data && data.criticality && data.criticality.critical_node,
+                data && data.graph && data.graph.critical_node,
+                data && data.analysis && data.analysis.critical_node
+            ];
+
+            for (const value of candidates) {
+                if (Array.isArray(value) && value.length >= 2) {
+                    const r = Number(value[0]);
+                    const c = Number(value[1]);
+                    if (Number.isFinite(r) && Number.isFinite(c)) {
+                        return [r, c];
+                    }
+                }
+
+                // Backend sometimes serializes tuple coordinates as "(40, 137)".
+                if (typeof value === "string") {
+                    const match = value.match(
+                        /\(\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*\)/
+                    );
+                    if (match) {
+                        return [Number(match[1]), Number(match[2])];
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        function drawCriticalityMap(data) {
+            if (!canvas) return;
+
+            const node = getCriticalNode(data);
+
+            const rect = canvas.getBoundingClientRect();
+            const width = Math.max(600, Math.floor(rect.width || 900));
+            const height = Math.max(420, Math.floor(rect.height || 500));
+            const dpr = window.devicePixelRatio || 1;
+
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            canvas.style.width = width + "px";
+            canvas.style.height = height + "px";
+
+            const ctx = canvas.getContext("2d");
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            ctx.clearRect(0, 0, width, height);
+
+            // Technical dark base.
+            ctx.fillStyle = "#0d1316";
+            ctx.fillRect(0, 0, width, height);
+
+            // Subtle grid to make this clearly an analysis map,
+            // not a duplicate of the Step 03 graph panel.
+            ctx.strokeStyle = "rgba(70, 105, 115, 0.16)";
+            ctx.lineWidth = 1;
+            for (let x = 0; x <= width; x += 28) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+            for (let y = 0; y <= height; y += 28) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+
+            // Prefer the AI road mask as the Step 04 base.
+            // This makes Step 04 visually different from Step 03's graph.
+            const source = predictionImage;
+            const graphPath = data && data.graph
+                ? data.graph.visualization
+                : null;
+
+            function finish(sourceImg) {
+                if (sourceImg && sourceImg.naturalWidth) {
+                    const scale = Math.min(
+                        (width - 36) / sourceImg.naturalWidth,
+                        (height - 70) / sourceImg.naturalHeight
+                    );
+                    const drawW = sourceImg.naturalWidth * scale;
+                    const drawH = sourceImg.naturalHeight * scale;
+                    const ox = (width - drawW) / 2;
+                    const oy = 42 + (height - 70 - drawH) / 2;
+
+                    // Desaturate the road-mask/graph base so the hotspot
+                    // becomes the visual focus.
+                    ctx.save();
+                    ctx.globalAlpha = 0.68;
+                    ctx.filter = "grayscale(1) contrast(1.25)";
+                    ctx.drawImage(sourceImg, ox, oy, drawW, drawH);
+                    ctx.restore();
+
+                    // Road-network analysis frame.
+                    ctx.strokeStyle = "rgba(120, 155, 165, 0.35)";
+                    ctx.strokeRect(ox, oy, drawW, drawH);
+
+                    if (node) {
+                        const row = node[0];
+                        const col = node[1];
+
+                        // Coordinates are row,column in the 256x256 mask.
+                        const x = ox + (col / 256) * drawW;
+                        const y = oy + (row / 256) * drawH;
+
+                        // Centrality hotspot.
+                        const radius = Math.max(55, Math.min(100, drawW * 0.11));
+                        const heat = ctx.createRadialGradient(
+                            x, y, 4,
+                            x, y, radius
+                        );
+                        heat.addColorStop(0, "rgba(255, 55, 45, 0.62)");
+                        heat.addColorStop(0.28, "rgba(255, 75, 55, 0.30)");
+                        heat.addColorStop(0.62, "rgba(255, 80, 55, 0.10)");
+                        heat.addColorStop(1, "rgba(255, 80, 55, 0)");
+
+                        ctx.fillStyle = heat;
+                        ctx.beginPath();
+                        ctx.arc(x, y, radius, 0, Math.PI * 2);
+                        ctx.fill();
+
+                        // Concentric bottleneck rings.
+                        [radius * .72, radius * .45, 13].forEach(function (r, i) {
+                            ctx.beginPath();
+                            ctx.arc(x, y, r, 0, Math.PI * 2);
+                            ctx.strokeStyle =
+                                "rgba(255, 80, 65, " +
+                                (0.24 + i * 0.18) + ")";
+                            ctx.lineWidth = 2;
+                            ctx.stroke();
+                        });
+
+                        // Critical node.
+                        ctx.beginPath();
+                        ctx.arc(x, y, 7, 0, Math.PI * 2);
+                        ctx.fillStyle = "#ff4b45";
+                        ctx.fill();
+
+                        ctx.beginPath();
+                        ctx.arc(x, y, 11, 0, Math.PI * 2);
+                        ctx.strokeStyle = "#ffe1de";
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+
+                        // Label.
+                        const label = "CRITICAL NODE";
+                        ctx.font = "600 11px Arial";
+                        const pad = 9;
+                        const tw = ctx.measureText(label).width;
+                        let lx = x + 18;
+                        let ly = y - 38;
+                        if (lx + tw + pad * 2 > width - 12) {
+                            lx = x - tw - pad * 2 - 18;
+                        }
+                        if (ly < 35) ly = y + 18;
+
+                        ctx.fillStyle = "rgba(7, 12, 14, 0.94)";
+                        ctx.fillRect(lx, ly, tw + pad * 2, 25);
+                        ctx.strokeStyle = "#ff4b45";
+                        ctx.lineWidth = 1;
+                        ctx.strokeRect(lx, ly, tw + pad * 2, 25);
+                        ctx.fillStyle = "#ffd6d1";
+                        ctx.fillText(label, lx + pad, ly + 16);
+                    }
+
+                    ctx.font = "600 11px Arial";
+                    ctx.fillStyle = "#aab9be";
+                    ctx.fillText(
+                        "BETWEENNESS CENTRALITY / BOTTLENECK ANALYSIS",
+                        18, 22
+                    );
+
+                    ctx.fillStyle = "#ff4b45";
+                    ctx.fillRect(18, height - 23, 10, 10);
+                    ctx.font = "11px Arial";
+                    ctx.fillStyle = "#aab9be";
+                    ctx.fillText(
+                        "Highest-centrality location",
+                        36, height - 14
+                    );
+
+                    if (criticalityLoading)
+                        criticalityLoading.style.display = "none";
+                }
+            }
+
+            if (source && source.complete && source.naturalWidth) {
+                finish(source);
+            } else if (graphPath) {
+                // Fallback: load backend graph if prediction image is not ready.
+                const fallback = new Image();
+                fallback.onload = function () {
+                    finish(fallback);
+                };
+                fallback.src = resolveUrl(graphPath);
+            } else {
+                finish(null);
+            }
+        }
+
+        const originalFetch = window.fetch;
+
+        window.fetch = async function () {
+            const response =
+                await originalFetch.apply(this, arguments);
+
+            try {
+                const clone = response.clone();
+                const type =
+                    clone.headers.get("content-type") || "";
+
+                if (type.includes("application/json")) {
+                    const data = await clone.json();
+
+                    // STEP 03 — never remove this.
+                    if (data && data.graph &&
+                        data.graph.visualization) {
+                        showGraph(data.graph.visualization);
+                    }
+
+                    // STEP 04 — independent visual.
+                    if (data && (data.criticality || data.graph)) {
+                        // Give Step 02 a moment to populate predictionImage.
+                        setTimeout(function () {
+                            drawCriticalityMap(data);
+                        }, 150);
+                    }
+                }
+            } catch (error) {
+                console.debug(
+                    "[RoadVision] Visualization bridge:",
+                    error
+                );
+            }
+
+            return response;
+        };
+    })();
+    </script>
+
 
 </body>
 
